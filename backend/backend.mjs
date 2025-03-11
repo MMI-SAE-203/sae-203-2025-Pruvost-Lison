@@ -57,3 +57,53 @@ export async function getActivitiesByAnimateurName(nomAnimateur) {
 export async function update(collection, id, data) {
          await pb.collection(collection).update( id, data);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Test pour l'Anthentification par mail 
+export async function createUser(email, password) {
+    try {
+        await pb.collection("users").create({
+            email: email,
+            password: password,
+            passwordConfirm: password
+        });
+        console.log("Utilisateur a été créé avec succès !");
+    } catch (e) {
+        console.error("Erreur lors de la création de l'utilisateur :", e);
+    }
+}
+
+// Connexion de l'utilisateur
+export async function loginUser(email, password) {
+    try {
+        await pb.collection("users").authWithPassword(email, password);
+        console.log("Connexion réussie !");
+        console.log("Utilisateur connecté :", pb.authStore.model);
+    } catch (e) {
+        console.error("Erreur de connexion :", e);
+    }
+}
+
+// Vérifier si l'utilisateur est connecté
+export function isLoggedIn() {
+    return pb.authStore.isValid;
+}
+
+// Déconnexion d'un utilisateur
+export async function logoutUser() {
+    pb.authStore.clear();
+    console.log("Déconnexion réussie !");
+}

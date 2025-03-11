@@ -1,3 +1,60 @@
-<footer class="relative mt-2 bottom-0 w-full bg-gray-800 text-white p-4">
-    <p class="">© 2021, Built with Astro</p>
+---
+import LogoFooter from "../assets/icons/festivallionimation.svg";
+import IconFacebook from "../assets/icons/facebook1.svg";
+import IconInstagram from "../assets/icons/instagram2.svg";
+import IconTwitter from "../assets/icons/twitter1.svg";
+import IconYoutube from "../assets/icons/youtube1.svg";
+import FooterVague from "../assets/icons/vaguefooter.svg";
+---
+
+<footer class="bg-(--color-yellow)">
+    <img src={FooterVague} alt="Décoration vague footer" />
+    <a href="/" aria-label="Accueil">
+        <LogoFooter />
+    </a>
+
+    <nav>
+        <h3>Menu</h3>
+        <ul>
+            <li><a href="/agenda">Agenda</a></li>
+            <li><a href="/contact">Contact et accès</a></li>
+        </ul>
+    </nav>
+
+    <div>
+        <h3>Contact</h3>
+        <address>
+            1 rue Paul Koepfler<br />90000 Belfort<br />
+            <a href="tel:0384542727">03 84 54 27 27</a><br />
+            <a href="mailto:conservatoire@agglo-belfort.fr"
+                >conservatoire@agglo-belfort.fr</a
+            >
+        </address>
+    </div>
+
+    <div>
+        <h3>Nous suivre</h3>
+        <ul>
+            <li>
+                <a href="https://facebook.com" aria-label="facebook">
+                    <IconFacebook />
+                </a>
+            </li>
+            <li>
+                <a href="https://instagram.com" aria-label="instagram">
+                    <IconInstagram />
+                </a>
+            </li>
+            <li>
+                <a href="https://twitter.com" aria-label="twitter">
+                    <IconTwitter />
+                </a>
+            </li>
+            <li>
+                <a href="https://youtube.com" aria-label="youtube">
+                    <IconYoutube />
+                </a>
+            </li>
+        </ul>
+    </div>
 </footer>

@@ -1,5 +1,5 @@
 import {
-    getAllFilms, getAllActivities, getAllGuests, getFilmById, getActivityById, getGuestById, getActivitiesByAnimateurName, update  
+    getAllFilms, getAllActivities, getAllGuests, getFilmById, getActivityById, getGuestById, getActivitiesByAnimateurName, update, createUser, loginUser, logoutUser  
 } from './backend.mjs'
 
 // Test récupération de tous les films
@@ -63,16 +63,40 @@ import {
 // }
 
 // Test récupération des activités d'un animateur par nom
-try {
-    const activitiesByName = await getActivitiesByAnimateurName("Don");
-    console.log(activitiesByName);
-} catch (e) {
-    console.error(e);
-}
+// try {
+//     const activitiesByName = await getActivitiesByAnimateurName("Don");
+//     console.log(activitiesByName);
+// } catch (e) {
+//     console.error(e);
+// }
 
 
 // try {
 //     await update("Films", 'i3nmrgqx7032st9', {titre_film: "Toy Story"});
+// } catch (e) {
+//     console.error(e);
+// }
+
+
+// Test pour la création d'un utilisateur
+// try {
+//     await createUser("user1@test.fr", "123456789");
+// } catch (e) {
+//     console.error(e);
+// }
+
+// Test de connexion utilisateur
+// try {
+//     await loginUser("user1@test.fr", "123456789");
+//     console.log("Utilisateur connecté ?", isLoggedIn());
+// } catch (e) {
+//     console.error(e);
+// }
+
+// Test de déconnexion utilisateur
+// try {
+//     await logoutUser();
+//     console.log("Utilisateur connecté après déconnexion ?", isLoggedIn());
 // } catch (e) {
 //     console.error(e);
 // }

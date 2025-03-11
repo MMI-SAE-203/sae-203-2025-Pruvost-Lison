@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Monserrat", sans-serif;
+    --font-heading: "Chewy", sans-serif;
+
+    --color-black: oklch(0% 0.0066 100.6);
+    /* #000000 */
+    --color-white: oklch(100% 0 100.6);
+    /* #FFFFFF */
+    --color-brownblack: oklch(40.84% 0.0083 97.52);
+    /* #4B4A45 */
+    --color-pink: oklch(71.77% 0.1899 2.25);
+    /* #FF679A */
+    --color-bleu: oklch(79.35% 0.1148 208.01);
+    /* #4DD0E2 */
+    --color-bleuhero: oklch(83.15% 0.0773 225.2);
+    /* #90D3EE */
+    --color-yellow: oklch(90.84% 0.1616 100.6);
+    /* #F9E351 */
+}
+
+@layer base {
+    body {
+        @apply font-sans text-base leading-normal;
+    }
+
+    h1 {
+        @apply text-4xl font-heading leading-tight lg:text-6xl;
+    }
+
+    h2 {
+        @apply text-2xl font-heading leading-tight lg:text-4xl;
+    }
+
+    h3 {
+        @apply font-sans font-medium leading-tight my-4;
+        font-size: 1.17em;
+    }
+}
+
