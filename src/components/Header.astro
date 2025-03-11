@@ -1,43 +1,146 @@
 ---
-
+import { Image } from "astro:assets";
+import Logo from "../assets/icons/logo_cercle.svg";
+import IconSearch from "../assets/icons/search.svg";
+import Deco from "../assets/deco_header.svg";
 ---
 
-<header>
-    <nav>
-        <ul class="flex gap-4 bg-slate-500 w-full p-4">
-            <li>
-                <a href="/" class="text-white hover:text-gray-300">Acceuil</a>
-            </li>
-            <li>
-                <a href="/festival/" class="text-white hover:text-gray-300"
-                    >Le Festival</a
+<header
+    class="px-6 py-4 fixed z-10 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out
+    bg-brownblack lg:py-0 lg:brownblack"
+    id="header"
+>
+    <div class="flex items-center relative z-20">
+        <a href="/" aria-label="Accueil">
+            <Logo />
+        </a>
+    </div>
+
+    <div class="flex items-center gap-4 lg:flex-row-reverse">
+        <button class="w-12 flex justify-center" aria-label="Recherche">
+            <IconSearch />
+        </button>
+
+        <div>
+            <button
+                class="group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[2px] *:w-full *:brownblack *:transition-all *:duration-300 *:ease lg:hidden"
+                id="menu-btn"
+                aria-label="Menu"
+                aria-controls="menu"
+                aria-expanded="false"
+            >
+                <span
+                    class="group-aria-expanded:translate-y-[10.5px] group-aria-expanded:rotate-45"
+                ></span>
+                <span class="group-aria-expanded:opacity-0"></span>
+                <span
+                    class="group-aria-expanded:-translate-y-[10.5px] group-aria-expanded:-rotate-45"
+                ></span>
+            </button>
+
+            <nav
+                class="visible fixed z-10 inset-0 bg-brownblack text-2xl text-pink opacity-100 transition-all duration-300 ease-in-out max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-0 lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-pink lg:opacity-100"
+                id="menu"
+                aria-hidden="true"
+            >
+                <ul
+                    class="mt-[25vh] mx-16 lg:m-0 lg:flex *:relative *:overflow-hidden *:lg:before:absolute *:lg:before:bottom-0 *:lg:before:left-0 *:lg:before:h-2 *:lg:before:w-full *:lg:before:translate-y-2 *:lg:before:bg-yellow *:lg:before:transition-all *:lg:before:duration-300 *:lg:before:ease-in-out *:lg:hover:before:translate-y-0"
                 >
-            </li>
-            <li>
-                <a href="/programmation/" class="text-white hover:text-gray-300"
-                    >Programmation</a
-                >
-            </li>
-            <li>
-                <a href="/billetterie/" class="text-white hover:text-gray-300"
-                    >Billetterie</a
-                >
-            </li>
-            <li>
-                <a href="/invites/" class="text-white hover:text-gray-300"
-                    >Invités</a
-                >
-            </li>
-            <li>
-                <a href="/info_pratique/" class="text-white hover:text-gray-300"
-                    >Info pratique</a
-                >
-            </li>
-            <li>
-                <a href="/Contacts/" class="text-white hover:text-gray-300"
-                    >Contacts</a
-                >
-            </li>
-        </ul>
-    </nav>
+                    <li>
+                        <a href="/festival" class="block px-5 py-4 lg:py-8"
+                            >Le Festival</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/programmation" class="block px-5 py-4 lg:py-8"
+                            >Programmation</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/billetterie/1" class="block px-5 py-4 lg:py-8"
+                            >Billetterie</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/invites" class="block px-5 py-4 lg:py-8"
+                            >Invités</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/info_pratique" class="block px-5 py-4 lg:py-8"
+                            >Info pratique</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/contacts"
+                            class="block px-5 py-4 lg:py-8 lg:bg-pink lg:text-brownblack lg:px-8"
+                            >Contacts</a
+                        >
+                    </li>
+                </ul>
+                <!-- <Image
+                    src={Deco}
+                    alt="Vague footer"
+                    class="w-full h-full max-h-[50px] sm:max-h-[130px]"
+                /> -->
+            </nav>
+        </div>
+    </div>
 </header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Sélection des éléments
+        const toggle = document.querySelector("#menu-btn");
+        const nav = document.querySelector("#menu");
+        const page = document.body;
+        const navBar = document.querySelector("#header");
+
+        if (toggle && nav) {
+            toggle.addEventListener("click", () => {
+                const isOpen = toggle.getAttribute("aria-expanded") === "true";
+                const isClosed = !isOpen;
+
+                // Mise à jour des attributs ARIA pour l'accessibilité
+                toggle.setAttribute("aria-expanded", String(isClosed));
+                nav.setAttribute("aria-hidden", String(isOpen));
+                page.classList.toggle("noscroll", isClosed);
+            });
+        }
+
+        /*------------------------------------*\
+    # MASQUER LE HEADER AU SCROLL
+    \*------------------------------------*/
+        if (navBar) {
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+            const offset = 205;
+
+            function handleScroll() {
+                const currentScrollY = window.scrollY;
+
+                // Ajoute ou retire la classe "bg-white" en fonction du scroll
+                navBar.classList.toggle("bg-white", currentScrollY > offset);
+
+                // Cache ou montre le header en fonction du sens du scroll
+                if (currentScrollY > lastScrollY && currentScrollY > offset) {
+                    navBar.classList.add("-translate-y-full");
+                } else {
+                    navBar.classList.remove("-translate-y-full");
+                }
+
+                lastScrollY = currentScrollY;
+                ticking = false;
+            }
+
+            // Éviter d'appeler handleScroll trop souvent
+            window.addEventListener("scroll", () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(handleScroll);
+                    ticking = true;
+                }
+            });
+        }
+    });
+</script>

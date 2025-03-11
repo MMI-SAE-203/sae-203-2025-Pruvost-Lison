@@ -2,6 +2,7 @@
 import "@fontsource-variable/montserrat";
 import "@fontsource/chewy";
 import "../styles/global.css";
+import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
 const { title, description, image = "/screenshot.jpg" } = Astro.props;
@@ -57,7 +58,8 @@ const siteName = "Festival Lionimation";
 		<link rel="manifest" href="/site.webmanifest" />
 	</head>
 	<body>
-		<main>
+		<Header />
+		<main class="pt-6">
 			<slot />
 		</main>
 		<Footer/>
