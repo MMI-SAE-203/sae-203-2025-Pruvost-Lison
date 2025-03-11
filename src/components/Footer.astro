@@ -1,60 +1,130 @@
 ---
+import { Image } from "astro:assets";
 import LogoFooter from "../assets/icons/festivallionimation.svg";
 import IconFacebook from "../assets/icons/facebook1.svg";
 import IconInstagram from "../assets/icons/instagram2.svg";
 import IconTwitter from "../assets/icons/twitter1.svg";
 import IconYoutube from "../assets/icons/youtube1.svg";
-import FooterVague from "../assets/icons/vaguefooter.svg";
+import FooterVague from "../assets/vaguefooter.svg";
 ---
 
-<footer class="bg-(--color-yellow)">
-    <img src={FooterVague} alt="Décoration vague footer" />
-    <a href="/" aria-label="Accueil">
-        <LogoFooter />
-    </a>
+<footer class="bg-[color:var(--color-yellow)]">
+    <Image
+        src={FooterVague}
+        alt="Vague footer"
+        class="w-full h-full max-h-[50px] sm:max-h-[130px]"
+    />
+    <!-- Base mobile layout -->
+    <div class="px-6 py-16 space-y-6 text-sm">
+        <!-- Tablet and desktop layout -->
+        <div class="sm:grid sm:grid-cols-2 sm:gap-8 lg:grid-cols-12 lg:gap-6">
+            <div class="sm:col-span-1 lg:col-span-4">
+                <a class="block" href="/" aria-label="Accueil">
+                    <LogoFooter />
+                </a>
+            </div>
 
-    <nav>
-        <h3>Menu</h3>
-        <ul>
-            <li><a href="/agenda">Agenda</a></li>
-            <li><a href="/contact">Contact et accès</a></li>
-        </ul>
-    </nav>
-
-    <div>
-        <h3>Contact</h3>
-        <address>
-            1 rue Paul Koepfler<br />90000 Belfort<br />
-            <a href="tel:0384542727">03 84 54 27 27</a><br />
-            <a href="mailto:conservatoire@agglo-belfort.fr"
-                >conservatoire@agglo-belfort.fr</a
+            <div
+                class="sm:col-span-1 lg:col-span-8 lg:grid lg:grid-cols-2 lg:gap-6"
             >
-        </address>
-    </div>
+                <nav class="space-y-3 mt-6 sm:mt-0">
+                    <h3
+                        class="uppercase text-sm tracking-wide text-[color:var(--color-brownblack)] font-medium"
+                    >
+                        Menu
+                    </h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a
+                                href="#"
+                                class="hover:text-[color:var(--color-pink)] transition-colors"
+                                >Politique de confidentialité</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="/contact"
+                                class="hover:text-[color:var(--color-pink)] transition-colors"
+                                >Contact et accès</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                class="hover:text-[color:var(--color-pink)] transition-colors"
+                                >MENTIONS Légales</a
+                            >
+                        </li>
+                    </ul>
+                </nav>
 
-    <div>
-        <h3>Nous suivre</h3>
-        <ul>
-            <li>
-                <a href="https://facebook.com" aria-label="facebook">
-                    <IconFacebook />
-                </a>
-            </li>
-            <li>
-                <a href="https://instagram.com" aria-label="instagram">
-                    <IconInstagram />
-                </a>
-            </li>
-            <li>
-                <a href="https://twitter.com" aria-label="twitter">
-                    <IconTwitter />
-                </a>
-            </li>
-            <li>
-                <a href="https://youtube.com" aria-label="youtube">
-                    <IconYoutube />
-                </a>
-            </li>
-        </ul>
+                <div class="space-y-3 mt-6 sm:mt-0">
+                    <h3
+                        class="uppercase text-sm tracking-wide text-[color:var(--color-brownblack)] font-medium"
+                    >
+                        Contact
+                    </h3>
+                    <address class="not-italic space-y-1">
+                        1 rue Paul Koepfler<br />90000 Belfort<br />
+                        <a
+                            href="tel:0384542727"
+                            class="hover:text-[color:var(--color-pink)] transition-colors"
+                            >03 84 54 27 27</a
+                        ><br />
+                        <a
+                            href="mailto:contact@lionimationfestival.fr"
+                            class="hover:text-[color:var(--color-pink)] transition-colors"
+                            >contact@lionimationfestival.fr</a
+                        >
+                    </address>
+                </div>
+
+                <div class="space-y-3 mt-6 sm:mt-4 lg:mt-6">
+                    <h3
+                        class="uppercase text-sm tracking-wide text-[color:var(--color-brownblack)] font-medium"
+                    >
+                        Nous suivre
+                    </h3>
+                    <ul class="flex gap-4">
+                        <li>
+                            <a
+                                href="https://facebook.com"
+                                aria-label="facebook"
+                                class="hover:opacity-75 transition-opacity"
+                            >
+                                <IconFacebook class="w-8 h-8" />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://instagram.com"
+                                aria-label="instagram"
+                                class="hover:opacity-75 transition-opacity"
+                            >
+                                <IconInstagram class="w-8 h-8" />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://twitter.com"
+                                aria-label="twitter"
+                                class="hover:opacity-75 transition-opacity"
+                            >
+                                <IconTwitter class="w-8 h-8" />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://youtube.com"
+                                aria-label="youtube"
+                                class="hover:opacity-75 transition-opacity"
+                            >
+                                <IconYoutube class="w-8 h-8" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </footer>

@@ -18,6 +18,8 @@
     /* #90D3EE */
     --color-yellow: oklch(90.84% 0.1616 100.6);
     /* #F9E351 */
+
+    --my-grid: repeat(12, minmax(0, 64px));
 }
 
 @layer base {
@@ -39,3 +41,8 @@
     }
 }
 
+@layer components {
+    .grille {
+        @apply px-6 lg:grid lg:grid-cols-(--my-grid) lg:justify-center lg:gap-12;
+    }
+}
