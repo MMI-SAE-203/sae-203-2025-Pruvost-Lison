@@ -6,6 +6,7 @@ export async function getAllFilms() {
     return await pb.collection('Films').getFullList({
         sort: 'date_heure_film'
     });
+    // records.img=pb.files.getURL(records, records.imgUrl);
 }
 
 // Récupérer toutes les activités triées par date
