@@ -28,7 +28,7 @@
     }
 
     h1 {
-        @apply text-4xl font-heading leading-tight lg:text-6xl;
+        @apply text-5xl font-heading leading-tight lg:text-6xl;
     }
 
     h2 {
@@ -55,4 +55,48 @@
         header:not(.bg-white) button[aria-label="Recherche"]>svg>* {
             @apply max-lg:stroke-white;
         }
+                .duotone {
+                    @apply relative flex overflow-hidden bg-(--color-bleu) before:absolute before:inset-0 before:z-[1] before:bg-(--color-black) before:mix-blend-lighten before:transition-all before:duration-300 before:ease-in-out;
+        
+                    img {
+                        @apply flex-[1_0_100%] object-cover mix-blend-multiply grayscale transition-all duration-300 ease-in-out;
+                    }
+                }
+.main-content {
+    p {
+        @apply mb-4;
+    }
+
+    h2,
+    h3,
+    h4 {
+        @apply mb-4;
+    }
+
+    h2:not(:first-child),
+    h3:not(:first-child),
+    h4:not(:first-child) {
+        @apply mt-8;
+    }
+
+    ul {
+        @apply list-disc pl-5 my-4;
+    }
+
+    ol {
+        @apply list-decimal pl-5 my-4;
+    }
+
+    figure {
+        @apply lg:-mx-32;
+    }
+
+    figcaption {
+        @apply text-sm text-gray-500 mt-2;
+    }
+
+    address {
+        @apply not-italic;
+    }
+}
 }

@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import Logo from "../assets/icons/logo_cercle.svg";
 import IconSearch from "../assets/icons/search.svg";
-import Deco from "../assets/deco_header.svg";
 ---
 
 <header
@@ -23,7 +22,7 @@ import Deco from "../assets/deco_header.svg";
 
         <div>
             <button
-                class="group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[2px] *:w-full *:brownblack *:transition-all *:duration-300 *:ease lg:hidden"
+                class="group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[2px] *:w-full *:bg-[var(--color-pink)] *:transition-all *:duration-300 *:ease lg:hidden"
                 id="menu-btn"
                 aria-label="Menu"
                 aria-controls="menu"
@@ -52,13 +51,8 @@ import Deco from "../assets/deco_header.svg";
                         >
                     </li>
                     <li>
-                        <a href="/programmation" class="block px-5 py-4 lg:py-8"
-                            >Programmation</a
-                        >
-                    </li>
-                    <li>
-                        <a href="/billetterie/1" class="block px-5 py-4 lg:py-8"
-                            >Billetterie</a
+                        <a href="/activites" class="block px-5 py-4 lg:py-8"
+                            >Activités</a
                         >
                     </li>
                     <li>
@@ -67,23 +61,18 @@ import Deco from "../assets/deco_header.svg";
                         >
                     </li>
                     <li>
-                        <a href="/info_pratique" class="block px-5 py-4 lg:py-8"
+                        <a href="/info" class="block px-5 py-4 lg:py-8"
                             >Info pratique</a
                         >
                     </li>
                     <li>
                         <a
-                            href="/contacts"
+                            href="/contact"
                             class="block px-5 py-4 lg:py-8 lg:bg-pink lg:text-brownblack lg:px-8"
                             >Contacts</a
                         >
                     </li>
                 </ul>
-                <!-- <Image
-                    src={Deco}
-                    alt="Vague footer"
-                    class="w-full h-full max-h-[50px] sm:max-h-[130px]"
-                /> -->
             </nav>
         </div>
     </div>
