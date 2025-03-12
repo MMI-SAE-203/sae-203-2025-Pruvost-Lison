@@ -1,5 +1,7 @@
 import PocketBase from 'pocketbase';
+const POCKETBASE_URL = "http://127.0.0.1:8090";
 const pb = new PocketBase('http://127.0.0.1:8090');
+export { pb };
 
 // Récupérer tous les films triés par date de projection
 export async function getAllFilms() {

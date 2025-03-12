@@ -1,0 +1,33 @@
+---
+import { formatDate } from "../js/helpers";
+import ImagePB from "./ImagePB.astro";
+const { affiche_film, titre_film, lieu_film, date_heure_film } = Astro.props;
+const film = Astro.props;
+---
+
+<article class="p-4 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+    <!-- Affiche du film -->
+    
+    <ImagePB
+        record={film}
+        field="affiche_film"
+        alt="image"
+        classPicture="object-cover min-h-[40dvh] h-full w-full col-start-1 row-start-1 col-span-2 row-span-2 group-hover:before:bg-black"
+        classImg="group-hover:grayscale-0 group-hover:mix-blend-normal"
+    />
+
+    <!-- Titre du film -->
+    <h4 class="text-lg font-bold text-darkpurple">
+        {titre_film}
+    </h4>
+
+    <!-- Lieu et date du film -->
+    <p class="text-sm text-gray-600">
+        {film.lieu_film} — {formatDate(film.date_heure_film)}
+    </p>
+
+    <!-- Lien vers plus d'infos -->
+    <div class="mt-2">
+        <a href="#" class="text-pink-600 hover:underline"> Plus d'info </a>
+    </div>
+</article>

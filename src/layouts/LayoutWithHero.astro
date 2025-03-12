@@ -10,13 +10,13 @@ const {
     srcDesktop,
     alt,
     classContent = "main-content max-w-2xl mx-6 my-16 lg:mx-auto",
-    classLayout
+    classLayout,
 } = Astro.props;
 ---
 
 <Layout title={title} description={description}>
     <div class="relative">
-        <div class="absolute inset-0 mb-50 flex flex-col items-center justify-center text-white z-[2] space-y-4 sm:space-y-6 lg:space-y-8 px-4 text-center">
+        <div class="absolute w-full top-50 text-white z-[2] text-center">
             <h1 class="text-center">{title}</h1>
             {
                 subTitle && (
@@ -33,22 +33,23 @@ const {
             <slot name="chapo" />
         </div>
 
-        <div class="relative " class:list={classLayout}>
-    
-        <Picture
-            pictureAttributes={{
-                class: "duotone",
-            }},
-            class="w-full h-[90vh] object-cover"
-            formats={["avif", "webp"]}
-            src={src}
-            alt={alt}
-            widths={[540, 1024, src.width]}
-            sizes={`(max-width: 540px) 540px, (max-width: 1024px) 1024px, ${src.width}px`}
-        />
-        <slot name="patterns" />
-    </div>
-    <div class={classContent}>
-        <slot name="content" />
+        <div class="relative" class:list={classLayout}>
+            <Picture
+                pictureAttributes={{
+                    class: "duotone",
+                }}
+                ,
+                class="w-full h-[90vh] object-cover"
+                formats={["avif", "webp"]}
+                src={src}
+                alt={alt}
+                widths={[540, 1024, src.width]}
+                sizes={`(max-width: 540px) 540px, (max-width: 1024px) 1024px, ${src.width}px`}
+            />
+            <slot name="patterns" />
+        </div>
+        <div class={classContent}>
+            <slot name="content" />
+        </div>
     </div>
 </Layout>
