@@ -62,6 +62,17 @@ export async function update(collection, id, data) {
 }
 
 
+// test
+export async function oneFilm(id) {
+    try {
+        const record = await pb.collection('films').getOne(id);
+        return record;
+    } catch (error) {
+        console.error("Erreur lors de la récupération du film:", error);
+        return null;
+    }
+}
+
 
 
 

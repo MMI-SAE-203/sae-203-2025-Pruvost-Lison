@@ -1,13 +1,14 @@
 ---
 import { formatDate } from "../js/helpers";
 import ImagePB from "./ImagePB.astro";
-const { affiche_film, titre_film, lieu_film, date_heure_film } = Astro.props;
+const { affiche_film, titre_film, lieu_film, date_heure_film, id } =
+    Astro.props;
 const film = Astro.props;
 ---
 
 <article class="p-4 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
     <!-- Affiche du film -->
-    
+
     <ImagePB
         record={film}
         field="affiche_film"
@@ -27,7 +28,10 @@ const film = Astro.props;
     </p>
 
     <!-- Lien vers plus d'infos -->
-    <div class="mt-2">
-        <a href="#" class="text-pink-600 hover:underline"> Plus d'info </a>
-    </div>
+    <a
+        href={`/films/{id}`}
+        class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+    >
+        Plus d'info
+    </a>
 </article>

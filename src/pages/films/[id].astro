@@ -1,0 +1,159 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { oneFilm } from "../../../backend/backend.mjs";
+import IconClock from "../../assets/icons/IconClock.svg";
+import IconLanguage from "../../assets/icons/IconLanguage.svg";
+import IconGenre from "../../assets/icons/IconGenre.svg";
+import IconLove from "../../assets/icons/IconLove.svg";
+import IconShare from "../../assets/icons/IconShare.svg";
+import { formatDate } from "../../js/helpers";
+
+const { id } = Astro.params;
+console.log("ID du film:", id);
+const film = await oneFilm(id);
+console.log("Données du film:", film);
+---
+
+<Layout title={film?.titre_film || "Détails du film"}>
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        {film ? (
+            <>
+                <!-- Header avec navigation et actions -->
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-2">
+                        <a href="/films" class="text-blue-600 flex items-center gap-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 text-blue-600"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="3"
+                                    d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            <span class="text-sm font-bold"> Retour à la liste</span>
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button
+                            class="flex items-center gap-2 text-blue-600 border font-bold border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition"
+                        >
+                            <IconShare class="stroke-current w-5 h-5" />
+                            <span>Partager</span>
+                        </button>
+                        <button
+                            class="flex items-center gap-2 text-blue-600 font-bold border border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition"
+                        >
+                            <IconLove class="stroke-current w-5 h-5" />
+                            <span>Favori</span>
+                        </button>
+                    </div>
+                </div>
+
+                <h1 class="text-3xl font-bold mb-2">{film.titre_film}</h1>
+                <p class="text-gray-600 mb-8">
+                    {film.lieu_film} — {formatDate(film.date_heure_film)}
+                </p>
+
+                <!-- Galerie d'images -->
+                <div class="mb-8">
+                    <div class="h-[500px]">
+                        <img
+                            src={`https://estatery.pockethost.io/api/files/${film.collectionId}/${film.id}/${film.affiche_film}?thumb=1024x1024`}
+                            alt={`${film.titre_film} - Affiche`}
+                            class="w-full h-full object-cover rounded-lg"
+                        />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Caractéristiques -->
+                    <div
+                        class="col-span-1 lg:col-span-3 border h-fit bg-gray-50 p-4 rounded-lg grid grid-cols-2 lg:grid-cols-3 gap-4 text-left"
+                    >
+                        <div class="flex flex-col items-center">
+                            <p class="text-gray-600">Durée</p>
+                            <p class="font-semibold flex items-center">
+                                <IconClock class="w-5 h-5 mr-2 stroke-indigo-500" />
+                                {film.duree_film} min
+                            </p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <p class="text-gray-600">Langue</p>
+                            <p class="font-semibold flex items-center">
+                                <IconLanguage class="w-5 h-5 mr-2 stroke-indigo-500" />
+                                {film.langue_film}
+                            </p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <p class="text-gray-600">Genre</p>
+                            <p class="font-semibold flex items-center">
+                                <IconGenre class="w-5 h-5 mr-2 stroke-indigo-500" />
+                                {film.genre_film?.join(", ")}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Détails & Bouton -->
+                    <div
+                        class="col-span-1 bg-gray-50 p-6 border h-fit rounded-lg flex flex-col items-left"
+                    >
+                        <p class="text-gray-600">Année de sortie</p>
+                        <p class="text-2xl font-semibold text-blue-600">
+                            {film.annee_sortie_film}
+                        </p>
+                        {film.bande_annonce_film && (
+                            <a
+                                href={film.bande_annonce_film}
+                                target="_blank"
+                                class="mt-2 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center"
+                            >
+                                Voir la bande-annonce
+                            </a>
+                        )}
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold mb-4">Synopsis</h2>
+                    <div class="prose" set:html={film.synopsis_film} />
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h2 class="text-xl font-bold mb-4">Réalisation</h2>
+                        <p>{film.realisateur_film}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold mb-4">Production</h2>
+                        <p>{film.production_film}</p>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold mb-4">Casting</h2>
+                    <p>{film.liste_acteurs_film}</p>
+                </div>
+
+                {film.invite_associe && (
+                    <div class="mb-8">
+                        <h2 class="text-xl font-bold mb-4">Invité spécial</h2>
+                        <p>{film.invite_associe}</p>
+                    </div>
+                )}
+            </>
+        ) : (
+            <div class="text-center py-12">
+                <h1 class="text-2xl font-bold text-red-600 mb-4">Film non trouvé</h1>
+                <p class="mb-6">Désolé, nous n'avons pas pu trouver le film que vous cherchez.</p>
+                <a href="/films" class="inline-block bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">
+                    Retour à la liste des films
+                </a>
+            </div>
+        )}
+    </main>
+</Layout>
