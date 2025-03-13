@@ -1,11 +1,12 @@
 ---
 import Welcome from "../components/Welcome.astro";
 import LayoutWithHero from "../layouts/LayoutWithHero.astro";
+import PriceAccordion from "../components/PriceAccordion.astro";
 import image from "../assets/img/affiche_festival.webp";
+
 const title = "Info Pratique";
 const subTitle = "les prix? se rendre au festival? tout ce qu'il y a à savoir";
-const description =
-	".";
+const description = ".";
 ---
 
 <LayoutWithHero
@@ -20,6 +21,252 @@ const description =
 	>
 	</div>
 	<Fragment slot="content">
-		<p>Contenu principal de la page</p>
+		<div class="container mx-auto py-12 px-4 md:px-8">
+			<!-- Titre principal -->
+			<div class="max-w-4xl mx-auto mb-16 text-center">
+				<h1 class="text-3xl md:text-4xl font-bold mb-6">Billetterie et Tarifs</h1>
+				<p class="text-lg">
+					Découvrez nos différentes options de billets pour profiter pleinement du Festival Lionimation
+				</p>
+			</div>
+
+			<!-- Accordéon de tarifs -->
+			<div class="max-w-4xl mx-auto mb-16">
+				<h2 class="text-3xl font-bold mb-8 text-center">Nos tarifs</h2>
+				
+				<div class="space-y-4">
+					<PriceAccordion 
+						title="Pass Festival"
+						subtitle="Accès complet (7 jours)"
+						color="pink"
+						prices={{
+							adult: "80 €",
+							child: "40 €",
+							student: "60 €"
+						}}
+						description="Accédez à l'intégralité des projections, ateliers et événements durant toute la semaine du festival. Le Pass Festival inclut également l'accès à la soirée d'ouverture et à la cérémonie de clôture."
+					/>
+					
+					<PriceAccordion 
+						title="Billet Journée"
+						subtitle="Accès d'une journée"
+						color="bleu"
+						prices={{
+							adult: "20 €",
+							child: "10 €",
+							student: "15 €"
+						}}
+						description="Choisissez une journée spécifique pour profiter des projections et événements du programme. Ce billet vous donne accès à toutes les projections et activités prévues pour la journée choisie."
+					/>
+					
+					<PriceAccordion 
+						title="Billet Projection"
+						subtitle="Projection unique"
+						color="yellow"
+						prices={{
+							adult: "10 €",
+							child: "5 €",
+							student: "7 €"
+						}}
+						description="Vous souhaitez assister à une seule projection ? Réservez votre billet à l'unité et venez découvrir un film ou court-métrage de votre choix."
+					/>
+					
+					<PriceAccordion 
+						title="Ateliers"
+						subtitle="Ateliers et Masterclass"
+						color="green-500"
+						prices={{
+							adult: "15 €",
+							child: "8 €",
+							student: "10 €"
+						}}
+						description="Participez à un atelier pratique ou à une masterclass avec des professionnels de l'animation. Places limitées, pensez à réserver en avance !"
+					/>
+				</div>
+			</div>
+			
+			<!-- Offres spéciales -->
+			<div class="max-w-5xl mx-auto mb-20">
+				<h2 class="text-2xl font-bold mb-8 text-center">Offres spéciales</h2>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<!-- Pass Famille -->
+					<div class="bg-white rounded-lg shadow-lg overflow-hidden p-6 border-l-4 border-pink">
+						<div class="flex items-center mb-4">
+							<div class="mr-4 bg-pink rounded-full p-3 text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </div>
+							<h3 class="text-xl font-bold">Pass Famille</h3>
+						</div>
+						<div class="pl-14">
+							<p class="mb-3"><span class="font-bold">2 adultes + 2 enfants : 150 €</span></p>
+							<p class="text-sm text-gray-600">Offre valable pour un accès complet au festival pendant 7 jours. Une économie de plus de 20% sur le tarif normal !</p>
+						</div>
+					</div>
+					
+					<!-- Groupes -->
+					<div class="bg-white rounded-lg shadow-lg overflow-hidden p-6 border-l-4 border-bleu">
+						<div class="flex items-center mb-4">
+							<div class="mr-4 bg-bleu rounded-full p-3 text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </div>
+							<h3 class="text-xl font-bold">Groupes</h3>
+						</div>
+						<div class="pl-14">
+							<p class="mb-3"><span class="font-bold">Tarifs préférentiels pour les groupes de 10 personnes ou plus</span></p>
+							<p class="text-sm text-gray-600">Idéal pour les écoles, associations et entreprises. Contactez-nous pour obtenir un devis personnalisé en fonction de vos besoins.</p>
+							<a href="/contact" class="inline-block mt-3 text-bleu hover:underline">Nous contacter pour un devis</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Informations complémentaires -->
+			<div class="max-w-4xl mx-auto bg-gray-50 p-8 rounded-lg">
+				<h2 class="text-2xl font-bold mb-6 text-center">Informations importantes</h2>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+					<div>
+						<h3 class="text-lg font-bold mb-3 flex items-center">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+							</svg>
+							Réservation
+						</h3>
+						<ul class="ml-7 space-y-2 text-sm">
+							<li>• Réservation en ligne jusqu'à 2h avant l'événement</li>
+							<li>• Retrait des billets sur place ou e-billet</li>
+							<li>• Paiement sécurisé par carte bancaire</li>
+						</ul>
+					</div>
+					
+					<div>
+						<h3 class="text-lg font-bold mb-3 flex items-center">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+							</svg>
+							Conditions d'accès
+						</h3>
+						<ul class="ml-7 space-y-2 text-sm">
+							<li>• Les enfants de moins de 12 ans doivent être accompagnés</li>
+							<li>• Tarif réduit: justificatif obligatoire</li>
+							<li>• Ouverture des portes 30 minutes avant chaque événement</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="text-center mt-8">
+					<a href="/programme" class="inline-block bg-pink text-white px-8 py-3 rounded-lg hover:bg-opacity-90 transition-colors">
+						Découvrir le programme complet
+					</a>
+				</div>
+			</div>
+			
+			<!-- FAQ -->
+			<div class="max-w-3xl mx-auto mt-20">
+				<h2 class="text-2xl font-bold mb-8 text-center">Questions fréquentes</h2>
+				
+				<div class="space-y-4">
+					<div class="border border-gray-200 rounded-lg overflow-hidden">
+						<div class="p-4 font-medium bg-gray-50">
+							Comment puis-je modifier ou annuler ma réservation ?
+						</div>
+						<div class="p-4 text-sm">
+							Vous pouvez modifier ou annuler votre réservation jusqu'à 48h avant l'événement. Pour cela, connectez-vous à votre compte sur notre site ou contactez notre service client par email.
+						</div>
+					</div>
+					
+					<div class="border border-gray-200 rounded-lg overflow-hidden">
+						<div class="p-4 font-medium bg-gray-50">
+							Les billets sont-ils nominatifs ?
+						</div>
+						<div class="p-4 text-sm">
+							Les Pass Festival sont nominatifs et nécessitent une pièce d'identité. Les billets journée et projection peuvent être utilisés par n'importe qui.
+						</div>
+					</div>
+					
+					<div class="border border-gray-200 rounded-lg overflow-hidden">
+						<div class="p-4 font-medium bg-gray-50">
+							Y a-t-il un âge minimum pour assister aux projections ?
+						</div>
+						<div class="p-4 text-sm">
+							Chaque projection a sa propre classification d'âge. Ces informations sont indiquées dans le programme détaillé. Les enfants de moins de 12 ans doivent être accompagnés d'un adulte.
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- bout -->
+			<div class="max-w-5xl mx-auto mt-20 p-10 bg-pink text-white rounded-lg text-center">
+				<h2 class="text-2xl font-bold mb-4">Prêt à vivre l'expérience Lionimation ?</h2>
+				<p class="mb-8">Réservez dès maintenant vos billets pour le festival et plongez dans l'univers magique de l'animation.</p>
+				<a href="/billetterie" class="inline-block bg-white text-pink font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors">
+					Réserver mes billets
+				</a>
+			</div>
+		</div>
+<!-- Section Lieux & Réseaux de transports -->
+<div class="max-w-4xl mx-auto mt-20 mb-16">
+  <h2 class="text-3xl font-bold mb-8 text-center">Lieux & Réseaux de transports</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Accès au Cinéma de Belfort -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-xl font-bold mb-4 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+        </svg>
+        Cinéma Pathé Belfort
+      </h3>
+      
+      <div class="ml-8 space-y-3">
+        <p><strong>Adresse:</strong> 1 Boulevard Richelieu, 90000 Belfort</p>
+        
+        <p><strong>Transports en commun:</strong> Lignes de bus 1, 2 et 3, arrêt "Centre Ville" à 5 minutes à pied du cinéma.</p>
+        
+        <p><strong>À pied:</strong> Situé en plein centre-ville, le cinéma est facilement accessible à pied depuis la gare (15 min) ou la vieille ville (5 min).</p>
+      </div>
+    </div>
+    
+    <!-- Parking Arsenal -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-xl font-bold mb-4 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-bleu" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+        </svg>
+        Parking Arsenal
+      </h3>
+      
+      <div class="ml-8 space-y-3">
+        <p><strong>Adresse:</strong> Boulevard de l'Arsenal, 90000 Belfort</p>
+        
+        <p><strong>Tarifs:</strong></p>
+        <ul class="list-disc ml-5 space-y-1">
+          <li>Le parking est gratuit le samedi après-midi, le dimanche et les jours fériés</li>
+          <li>En semaine, il est payant avec un tarif de 1,30 € par heure</li>
+        </ul>
+        
+        <p><strong>Accès:</strong> À environ 5 minutes à pied du cinéma Pathé. C'est l'option de stationnement la plus pratique pour accéder au festival.</p>
+      </div>
+    </div>
+  </div>
+  
+
+<div class="mt-8 bg-gray-100 rounded-lg p-6 text-center">
+  <p class="mb-4">Pour vous aider à vous repérer, consultez l'emplacement du cinéma sur la carte:</p>
+  
+  <!-- test pour afficher la map mais avec le lien google ne fonctionnait pas -->
+  <a href="https://maps.app.goo.gl/qRNsN3cSP95UBj9T7" target="_blank" class="inline-flex items-center bg-pink text-white px-6 py-3 rounded hover:bg-opacity-90 transition-colors">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+    <span>Voir le cinéma sur Google Maps</span>
+  </a>
+</div>
 	</Fragment>
 </LayoutWithHero>

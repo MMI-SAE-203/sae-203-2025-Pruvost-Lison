@@ -1,7 +1,11 @@
 ---
 import Welcome from "../components/Welcome.astro";
 import LayoutWithHero from "../layouts/LayoutWithHero.astro";
+import Carousel from "../components/Carousel.astro";
 import image from "../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
+import Card from "../components/Card.astro";
+import { getAllFilms } from "../../backend/backend.mjs";
+const films = await getAllFilms();
 const title = "Le Festival";
 const subTitle = "Découvrer Lionimation";
 const description =
@@ -23,6 +27,34 @@ const description =
 	>
 	</div>
 	<Fragment slot="content">
-		<p>Contenu principal de la page</p>
+		<div class="w-full max-w-5xl mx-auto px-4 md:px-0 mb-20">
+                <div class="max-w-2xl mx-auto md:mx-0">
+                    <p class="text-center md:text-left mb-8">
+                        Du 7 au 10 juillet 2025, plongez dans l'univers du Lionimation Festival, le rendez-vous incontournable de l'animation à Belfort ! Pendant une semaine, cet événement met à l'honneur la diversité et la créativité de l'animation sous toutes ses formes, avec une programmation riche et variée qui émerveillera petits et grands.
+                    </p>
+                    <div class="flex justify-center md:justify-start">
+                        <a href="/about" class="inline-flex items-center border border-gray-800 text-gray-800 px-6 py-2 rounded-none hover:bg-gray-100 transition-colors">
+                            <span class="mr-1">VOIR LES INFOS PRATIQUES</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+		<p>Chaque jour, le Lionimation Festival met à l'honneur un style d'animation différent, des classiques comme Disney et Looney Tunes à la rotoscopie de Qui veut la peau de Roger Rabbit ?. </p>
+		<p>Plongez dans l'animation numérique avec des séries cultes telles que Rick et Morty et Adventure Time, émerveillez-vous devant la magie de Pixar et Dreamworks en 3D, et découvrez le stop motion avec des œuvres comme Wallace et Gromit et Fantastic Mr. Fox.</p>
+	<!-- carousel des films -->
+			<div class="mt-16 px-4 md:px-8">
+                <Carousel id="films-carousel" title="Films à l'affiche">
+                    {films.slice(0, 8).map((film) => (
+                        <li>
+                            <Card {...film} />
+                        </li>
+                    ))}
+                </Carousel>
+            </div>
+			<p class="mt-16">Du divertissement pour tous, des rencontres avec des professionnels de l'animation et des moments uniques de projection : le Lionimation Festival est l'occasion parfaite pour découvrir ou redécouvrir la richesse de cet art fascinant, dans une ambiance conviviale et créative.</p> 
+<h2>Valeurs et Thématique 2025</h2>
+<p>Pour l'édition 2025, notre festival valorise la diversité et l'innovation, célébrant l'animation comme un moyen d'expression artistique universel et engagé.<p/>
+<p>Ne loupez pas cette semaine exceptionnelle qui s'annonce riche en découvertes et en émotions visuelles !<p/>
+
 	</Fragment>
 </LayoutWithHero>
