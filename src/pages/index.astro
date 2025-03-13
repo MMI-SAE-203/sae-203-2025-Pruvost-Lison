@@ -5,7 +5,7 @@ import Carousel from "../components/Carousel.astro";
 import Card from "../components/Card.astro";
 import GuestCard from "../components/GuestCard.astro";
 import ActiviteCard from "../components/ActiviteCard.astro";
-import image from "../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
+import heroImage from "../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
 import { getAllFilms, getAllGuests, getAllActivities } from "../../backend/backend.mjs";
 
 const title = "Festival Lionimation";
@@ -22,7 +22,7 @@ const activities = await getAllActivities();
     title={title}
     description={description}
     subTitle={subTitle}
-    src={image}
+    src={heroImage}
     alt="Image de cinéma">
     <div
         class="absolute inset-0 z-0 flex items-center justify-end overflow-hidden stroke-(--color-pink) stroke-24 opacity-80 mix-blend-difference"
@@ -30,15 +30,61 @@ const activities = await getAllActivities();
     >
     </div>
     <Fragment slot="content">
-        <div class="py-8">
-            <h2 class="text-2xl font-bold mb-6 text-center">Bienvenue au Festival Lionimation 2025</h2>
-            <p class="text-center max-w-3xl mx-auto mb-12">
-                Découvrez notre programmation exceptionnelle composée des meilleurs films d'animation, 
-                d'invités prestigieux et d'activités pour toute la famille.
-            </p>
+        <div class="container mx-auto py-8 md:py-16">
+            <!-- Section bienvenue - exactement comme dans l'image -->
+            <div class="w-full max-w-5xl mx-auto px-4 md:px-0 mb-20">
+                <div class="max-w-2xl mx-auto md:mx-0">
+                    <p class="text-center md:text-left mb-8">
+                        Bienvenue au Lionimation Festival, le rendez-vous incontournable de l'audiovisuel à 
+                        Belfort, dédié à l'animation sous toutes ses formes ! Pendant une semaine, plongez 
+                        dans un voyage visuel unique à travers différents styles d'animation
+                    </p>
+                    <div class="flex justify-center md:justify-start">
+                        <a href="/about" class="inline-flex items-center border border-gray-800 text-gray-800 px-6 py-2 rounded-none hover:bg-gray-100 transition-colors">
+                            <span class="mr-1">EN SAVOIR PLUS</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
             
-            <!-- Carousel des films -->
-            <div class="mt-16">
+            <!-- Section 2: Deux zones côte à côte exactement comme l'image -->
+            <div class="w-full max-w-5xl mx-auto px-4 md:px-0 mb-20">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Colonne gauche -->
+                    <div class="space-y-16">
+                        <!-- PÉRIODE D'OUVERTURE -->
+                        <div>
+                            <h2 class="text-2xl font-bold mb-4 uppercase">PÉRIODE<br>D'OUVERTURE</h2>
+                            <p class="mb-2">Du Lundi 7 Au Samedi 13 Juillet<br>2025.7 Au Samedi 13 Juillet 2025.</p>
+                        </div>
+                        
+                        <!-- VENEZ CÉLÉBRER -->
+                        <div>
+                            <h2 class="text-2xl font-bold mb-4 uppercase">VENEZ CÉLÉBRER<br>L'ART DE L'ANIMATION<br>AVEC NOUS</h2>
+                            <div class="mt-4">
+                                <a href="/billetterie" class="inline-block border border-gray-800 text-gray-800 px-6 py-2 rounded-none hover:bg-gray-100 transition-colors uppercase">
+                                    Accéder à la billetterie
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Colonne droite: Image du festival exactement comme l'image -->
+                    <div class="flex justify-center md:justify-end">
+                        <img 
+                            src="/src/assets/img/affiche_festival.webp" 
+                            alt="Affiche du festival Lionimation" 
+                            class="h-auto max-w-full object-contain"
+                        />
+                    </div>
+                </div>
+            </div>
+
+<!-- carousel des films -->
+			<div class="mt-16 px-4 md:px-8">
                 <Carousel id="films-carousel" title="Films à l'affiche">
                     {films.slice(0, 8).map((film) => (
                         <li>
@@ -47,9 +93,66 @@ const activities = await getAllActivities();
                     ))}
                 </Carousel>
             </div>
+
+			<!-- Section "CELA POURRAIT VOUS INTÉRESSER" -->
+<div class="w-full max-w-5xl mx-auto px-4 md:px-0 my-20">
+    <h2 class="text-3xl font-bold mb-12 uppercase">CELA POURRAIT<br>VOUS INTÉRESSER</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Carte 1: EXPLOREZ LE PROGRAMME -->
+        <div class="bg-pink p-6 flex flex-col">
+            <h3 class="text-xl font-bold mb-4 uppercase">EXPLOREZ LE PROGRAMME</h3>
+            <p class="mb-8 flex-grow">
+                Préparez-vous à vivre une semaine pleine de magie et de créativité
+            </p>
+            <div class="mt-auto">
+                <a href="/programme" class="inline-flex items-center bg-white border border-gray-800 text-gray-800 px-6 py-2 hover:bg-gray-100 transition-colors">
+                    <span class="mr-1">EN SAVOIR PLUS</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Carte 2: RENCONTREZ NOS INVITÉS -->
+        <div class="bg-bleu p-6 flex flex-col">
+            <h3 class="text-xl font-bold mb-4 uppercase">RENCONTREZ NOS INVITÉS</h3>
+            <p class="mb-8 flex-grow">
+                Nos invités, des réalisateurs aux animateurs, prêts à échanger et à inspirer
+            </p>
+            <div class="mt-auto">
+                <a href="/invites" class="inline-flex items-center bg-white border border-gray-800 text-gray-800 px-6 py-2 hover:bg-gray-100 transition-colors">
+                    <span class="mr-1">EN SAVOIR PLUS</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Carte 3: CONSULTEZ NOS INFOS PRATIQUES -->
+        <div class="bg-yellow p-6 flex flex-col">
+            <h3 class="text-xl font-bold mb-4 uppercase">CONSULTEZ NOS INFOS PRATIQUES</h3>
+            <p class="mb-8 flex-grow">
+                Tout savoir sur les horaires, les lieux et les modalités d'accès au festival
+            </p>
+            <div class="mt-auto">
+                <a href="/infos-pratiques" class="inline-flex items-center bg-white border border-gray-800 text-gray-800 px-6 py-2 hover:bg-gray-100 transition-colors">
+                    <span class="mr-1">EN SAVOIR PLUS</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
             
-            <!-- Carousel des invités -->
-            <div class="mt-16">
+            <!-- Carousels existants -->
+
+            
+            <div class="mt-16 px-4 md:px-8">
                 <Carousel id="guests-carousel" title="Nos invités d'honneur">
                     {guests.slice(0, 8).map((guest) => (
                         <li>
@@ -59,8 +162,43 @@ const activities = await getAllActivities();
                 </Carousel>
             </div>
             
-            <!-- Carousel des activités -->
-            <div class="mt-16">
+<!-- Section "CELUI QUE VOUS ATTENDEZ" avec Wallace et Gromit -->
+<div class="w-full max-w-5xl mx-auto px-4 md:px-0 my-20">
+    <div class="flex flex-col md:flex-row items-center gap-8">
+        <!-- Texte à gauche -->
+        <div class="md:w-1/2">
+            <h2 class="text-3xl font-bold mb-8 uppercase">CELUI QUE VOUS<br>ATTENDEZ</h2>
+            
+            <div class="bg-bleu p-6 mb-6">
+                <p class="mb-4">
+                    35 ans après leur première apparition, nous avons le plaisir de vous annoncer que Wallace et Gromit reviennent sur grand écran au Lionimation Festival !
+                </p>
+                <p>
+                    Ce duo culte de l'animation en stop motion, qui a marqué des générations depuis 1989, sera à l'honneur lors d'une projection spéciale.
+                </p>
+            </div>
+            
+            <a href="/wallace-et-gromit" class="inline-flex items-center border border-gray-800 text-gray-800 px-6 py-2 rounded-none hover:bg-gray-100 transition-colors">
+                <span class="mr-1">EN SAVOIR PLUS</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+        </div>
+        
+        <!-- Image à droite -->
+        <div class="md:w-1/2 flex justify-center md:justify-end">
+            <img 
+                src="/src/assets/img/walaceetgromit.webp" 
+                alt="Wallace et Gromit" 
+                class="h-auto max-w-full object-contain"
+            />
+        </div>
+    </div>
+</div>
+
+<!-- carousel des activites -->
+            <div class="mt-16 px-4 md:px-8">
                 <Carousel id="activities-carousel" title="Activités du festival">
                     {activities.slice(0, 8).map((activity) => (
                         <li>
@@ -77,5 +215,55 @@ const activities = await getAllActivities();
                 </a>
             </div>
         </div>
+
+
+<!-- Section "ILS NOUS SOUTIENNENT" avec logos partenaires -->
+<div class="w-full max-w-5xl mx-auto px-4 md:px-0 my-20">
+    <h2 class="text-3xl font-bold mb-10 uppercase">ILS NOUS<br>SOUTIENNENT</h2>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center mb-8">
+        <!-- Logo Belfort -->
+        <div class="flex items-center justify-center">
+            <img 
+                src="/src/assets/img/belfort.webp" 
+                alt="Ville de Belfort" 
+                class="max-h-24 w-auto"
+            />
+        </div>
+        
+        <!-- Logo FNAC -->
+        <div class="flex items-center justify-center">
+            <img 
+                src="/src/assets/img/fnac.webp" 
+                alt="FNAC" 
+                class="max-h-24 w-auto"
+            />
+        </div>
+        
+        <!-- Logo APARR -->
+        <div class="flex items-center justify-center">
+            <img 
+                src="/src/assets/img/aparr.webp" 
+                alt="APARR" 
+                class="max-h-24 w-auto"
+            />
+        </div>
+        
+        <!-- Logo CNC -->
+        <div class="flex items-center justify-center">
+            <img 
+                src="/src/assets/img/cnc.webp" 
+                alt="CNC" 
+                class="max-h-24 w-auto"
+            />
+        </div>
+    </div>
+    
+    <div class="flex justify-start">
+        <a href="/partenaires" class="inline-block border border-gray-800 text-gray-800 px-6 py-2 hover:bg-gray-100 transition-colors">
+            TOUS NOS PARTENAIRES
+        </a>
+    </div>
+</div>
     </Fragment>
 </LayoutWithHero>
