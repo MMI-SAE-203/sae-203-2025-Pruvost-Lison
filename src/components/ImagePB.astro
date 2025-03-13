@@ -1,7 +1,6 @@
 ---
 import { Picture } from "astro:assets";
 import { pb } from "../../backend/backend.mjs";
-
 const {
     record,
     field = "imgUrl",
@@ -10,25 +9,13 @@ const {
     classImg,
     thumb = "1024x1024",
 } = Astro.props;
-
-// Fonction pour obtenir l'URL avec gestion d'erreur
-function getImageUrl(record, field, thumb) {
-    try {
-        if (!record || !record[field]) return null;
-        // Assurez-vous que l'instance PocketBase est correctement configurée pour l'environnement
-        return pb.files.getURL(record, record[field], { thumb });
-    } catch (error) {
-        console.error("Erreur lors de la récupération de l'URL de l'image:", error);
-        // Retourne une URL de repli ou null
-        return null;
-    }
-}
-
-const imageUrl = getImageUrl(record, field, thumb);
+const imageUrl = record?.[field]
+    ? pb.files.getURL(record, record[field], { thumb })
+    : null;
 ---
 
 {
-    imageUrl ? (
+    imageUrl && (
         <Picture
             pictureAttributes={{ class: classPicture }}
             class={classImg}
@@ -37,11 +24,5 @@ const imageUrl = getImageUrl(record, field, thumb);
             alt={alt || "Image"}
             src={imageUrl}
         />
-    ) : (
-        <div class={classPicture || "w-full h-full bg-gray-200"}>
-            <div class={classImg || "w-full h-full flex items-center justify-center text-gray-400"}>
-                Image non disponible
-            </div>
-        </div>
     )
 }
