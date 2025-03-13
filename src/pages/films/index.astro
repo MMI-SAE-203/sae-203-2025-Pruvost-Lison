@@ -1,5 +1,4 @@
 ---
-import Welcome from "../../components/Welcome.astro";
 import LayoutWithHero from "../../layouts/LayoutWithHero.astro";
 import image from "../../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
 import { getAllFilms } from "../../../backend/backend.mjs";
@@ -7,10 +6,28 @@ import Card from "../../components/Card.astro";
 
 const title = "Programme des films";
 const subTitle = "du Lundi 7 au jeudi 10 Juillet 2025.";
-const description = ".";
+const description = "Découvrez tous les films projetés pendant le festival.";
 
-// Récupérer les films depuis PocketBase
-const events = await getAllFilms();
+// Récupérer tous les films depuis PocketBase
+const films = await getAllFilms();
+
+// Extraire tous les genres uniques pour créer les filtres
+// Note: supposant que genre_film est soit un tableau, soit une chaîne séparée par des virgules
+const allGenres = new Set();
+films.forEach(film => {
+    const genres = Array.isArray(film.genre_film) 
+        ? film.genre_film 
+        : film.genre_film?.split(", ");
+    
+    if (genres) {
+        genres.forEach(genre => {
+            if (genre) allGenres.add(genre.trim());
+        });
+    }
+});
+
+// Convertir le Set en tableau et trier
+const uniqueGenres = [...allGenres].sort();
 ---
 
 <LayoutWithHero
@@ -18,7 +35,7 @@ const events = await getAllFilms();
     description={description}
     subTitle={subTitle}
     src={image}
-    alt="Image de cinéma"
+    alt="Image du festival"
 >
     <div
         class="absolute inset-0 z-0 flex items-center justify-end overflow-hidden stroke-[--color-pink] stroke-24 opacity-80 mix-blend-difference"
@@ -27,36 +44,103 @@ const events = await getAllFilms();
     </div>
 
     <Fragment slot="content">
-        <h2>Programmation des films de la semaine</h2>
+        <h2>Programmation des films du festival</h2>
+
+        <!-- Filtres par genre -->
+        <div class="flex flex-wrap gap-2 mb-6 justify-center" id="filter-buttons">
+            <button
+                data-filter="all"
+                class="filter-btn active px-4 py-2 bg-pink text-white rounded-full text-sm font-medium transition-colors"
+            >
+                Tous les films
+            </button>
+            
+            {uniqueGenres.map(genre => (
+                <button
+                    data-filter={genre}
+                    class="filter-btn px-4 py-2 bg-gray-200 rounded-full text-sm font-medium hover:bg-blue-500 hover:text-white transition-colors"
+                >
+                    {genre}
+                </button>
+            ))}
+        </div>
 
         <!-- Affichage des films -->
-        <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-3"
-        >
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-3" id="films-grid">
             {
-                events.length > 0 ? (
-                    events.map((event) => <Card {...event} />)
+                films.length > 0 ? (
+                    films.map((film) => (
+                        <div class="film-item" data-genres={Array.isArray(film.genre_film) 
+                            ? film.genre_film.join(",") 
+                            : film.genre_film}>
+                            <Card {...film} />
+                        </div>
+                    ))
                 ) : (
                     <p class="col-span-full text-center">
                         Aucun film à afficher.
                     </p>
                 )
             }
+            <p id="no-results" class="col-span-full text-center py-12 hidden">
+                Aucun film correspondant à ce filtre.
+            </p>
         </div>
     </Fragment>
 </LayoutWithHero>
 
-<style>
-    /* Styles additionnels pour le responsive si nécessaire */
-    @media (max-width: 640px) {
-        /* Styles pour mobile */
-    }
+<script>
+    // JavaScript pour le filtrage
+    document.addEventListener('DOMContentLoaded', () => {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const filmItems = document.querySelectorAll('.film-item');
+        const noResults = document.getElementById('no-results');
 
-    @media (min-width: 641px) and (max-width: 1024px) {
-        /* Styles pour tablette */
-    }
+        // Fonction pour appliquer le filtre
+        function applyFilter(filterValue) {
+            let visibleCount = 0;
+            
+            filmItems.forEach(item => {
+                const itemGenres = item.getAttribute('data-genres');
+                if (filterValue === 'all' || (itemGenres && itemGenres.includes(filterValue))) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Afficher message si aucun résultat
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
 
-    @media (min-width: 1025px) {
-        /* Styles pour desktop */
-    }
-</style>
+        // Ajouter les écouteurs d'événements aux boutons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Mettre à jour les classes des boutons
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-pink', 'bg-blue-500', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-800');
+                });
+                
+                // Ajouter la classe active au bouton cliqué
+                button.classList.remove('bg-gray-200', 'text-gray-800');
+                button.classList.add('active', 'text-white');
+                
+                // Couleur du bouton selon qu'il s'agit du filtre "tous" ou d'un genre
+                if (button.getAttribute('data-filter') === 'all') {
+                    button.classList.add('bg-pink');
+                } else {
+                    button.classList.add('bg-blue-500');
+                }
+                
+                // Appliquer le filtre
+                applyFilter(button.getAttribute('data-filter'));
+            });
+        });
+    });
+</script>

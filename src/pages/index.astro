@@ -1,28 +1,81 @@
 ---
 import Welcome from "../components/Welcome.astro";
 import LayoutWithHero from "../layouts/LayoutWithHero.astro";
+import Carousel from "../components/Carousel.astro";
+import Card from "../components/Card.astro";
+import GuestCard from "../components/GuestCard.astro";
+import ActiviteCard from "../components/ActiviteCard.astro";
 import image from "../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
+import { getAllFilms, getAllGuests, getAllActivities } from "../../backend/backend.mjs";
+
 const title = "Festival Lionimation";
 const subTitle = "Lundi 7 au samedi 13 Juillet 2025.";
-const description =
-	".";
+const description = ".";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Récupération des données pour les carousels
+const films = await getAllFilms();
+const guests = await getAllGuests();
+const activities = await getAllActivities();
 ---
 
 <LayoutWithHero
-	title={title}
-	description={description}
-	subTitle={subTitle}
-	src={image}
-	alt="Image de cinéma">
-	<div
-		class="absolute inset-0 z-0 flex items-center justify-end overflow-hidden stroke-(--color-pink) stroke-24 opacity-80 mix-blend-difference"
-		slot="patterns"
-	>
-	</div>
-	<Fragment slot="content">
-		<p>Contenu principal de la page</p>
-	</Fragment>
+    title={title}
+    description={description}
+    subTitle={subTitle}
+    src={image}
+    alt="Image de cinéma">
+    <div
+        class="absolute inset-0 z-0 flex items-center justify-end overflow-hidden stroke-(--color-pink) stroke-24 opacity-80 mix-blend-difference"
+        slot="patterns"
+    >
+    </div>
+    <Fragment slot="content">
+        <div class="py-8">
+            <h2 class="text-2xl font-bold mb-6 text-center">Bienvenue au Festival Lionimation 2025</h2>
+            <p class="text-center max-w-3xl mx-auto mb-12">
+                Découvrez notre programmation exceptionnelle composée des meilleurs films d'animation, 
+                d'invités prestigieux et d'activités pour toute la famille.
+            </p>
+            
+            <!-- Carousel des films -->
+            <div class="mt-16">
+                <Carousel id="films-carousel" title="Films à l'affiche">
+                    {films.slice(0, 8).map((film) => (
+                        <li>
+                            <Card {...film} />
+                        </li>
+                    ))}
+                </Carousel>
+            </div>
+            
+            <!-- Carousel des invités -->
+            <div class="mt-16">
+                <Carousel id="guests-carousel" title="Nos invités d'honneur">
+                    {guests.slice(0, 8).map((guest) => (
+                        <li>
+                            <GuestCard {...guest} />
+                        </li>
+                    ))}
+                </Carousel>
+            </div>
+            
+            <!-- Carousel des activités -->
+            <div class="mt-16">
+                <Carousel id="activities-carousel" title="Activités du festival">
+                    {activities.slice(0, 8).map((activity) => (
+                        <li>
+                            <ActiviteCard {...activity} />
+                        </li>
+                    ))}
+                </Carousel>
+            </div>
+            
+            <!-- Bouton pour voir le programme complet -->
+            <div class="text-center mt-12">
+                <a href="/films" class="inline-block bg-pink text-white py-3 px-8 rounded-lg hover:bg-pink-600 transition-colors">
+                    Voir le programme complet
+                </a>
+            </div>
+        </div>
+    </Fragment>
 </LayoutWithHero>

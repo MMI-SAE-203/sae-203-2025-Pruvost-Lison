@@ -1,0 +1,141 @@
+---
+import LayoutWithHero from "../../layouts/LayoutWithHero.astro";
+import image from "../../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
+import { getAllActivities } from "../../../backend/backend.mjs";
+import ActiviteCard from "../../components/ActiviteCard.astro";
+
+const title = "Programme des activités";
+const subTitle = "du Lundi 7 au jeudi 10 Juillet 2025.";
+const description = "Découvrez toutes les activités et événements proposés pendant le festival.";
+
+// Récupérer toutes les activités depuis PocketBase
+const activites = await getAllActivities();
+---
+
+<LayoutWithHero
+    title={title}
+    description={description}
+    subTitle={subTitle}
+    src={image}
+    alt="Image du festival"
+>
+    <div
+        class="absolute inset-0 z-0 flex items-center justify-end overflow-hidden stroke-[--color-pink] stroke-24 opacity-80 mix-blend-difference"
+        slot="patterns"
+    >
+    </div>
+
+    <Fragment slot="content">
+        <h2>Programmation des activités du festival</h2>
+
+        <!-- Filtres par type d'activité -->
+        <div class="flex flex-wrap gap-2 mb-6 justify-center" id="filter-buttons">
+            <button
+                data-filter="all"
+                class="filter-btn active px-4 py-2 bg-pink text-white rounded-full text-sm font-medium transition-colors"
+            >
+                Toutes
+            </button>
+            <button
+                data-filter="Conference"
+                class="filter-btn px-4 py-2 bg-gray-200 rounded-full text-sm font-medium hover:bg-blue-500 hover:text-white transition-colors"
+            >
+                Conférences
+            </button>
+            <button
+                data-filter="Atelier familial"
+                class="filter-btn px-4 py-2 bg-gray-200 rounded-full text-sm font-medium hover:bg-green-500 hover:text-white transition-colors"
+            >
+                Ateliers familiaux
+            </button>
+            <button
+                data-filter="Masterclass"
+                class="filter-btn px-4 py-2 bg-gray-200 rounded-full text-sm font-medium hover:bg-purple-500 hover:text-white transition-colors"
+            >
+                Masterclass
+            </button>
+            <button
+                data-filter="Atelier technique"
+                class="filter-btn px-4 py-2 bg-gray-200 rounded-full text-sm font-medium hover:bg-orange-500 hover:text-white transition-colors"
+            >
+                Ateliers techniques
+            </button>
+        </div>
+
+        <!-- Affichage des activités -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-3" id="activites-grid">
+            {
+                activites.map((activite) => (
+                    <div class="activite-item" data-type={activite.type_activite}>
+                        <ActiviteCard {...activite} />
+                    </div>
+                ))
+            }
+            <p id="no-results" class="col-span-full text-center py-12 hidden">
+                Aucune activité correspondant à ce filtre.
+            </p>
+        </div>
+    </Fragment>
+</LayoutWithHero>
+
+<script>
+    // JavaScript vanilla pour le filtrage
+    document.addEventListener('DOMContentLoaded', () => {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const activiteItems = document.querySelectorAll('.activite-item');
+        const noResults = document.getElementById('no-results');
+
+        // Fonction pour appliquer le filtre
+        function applyFilter(filterValue) {
+            let visibleCount = 0;
+            
+            activiteItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-type') === filterValue) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Afficher message si aucun résultat
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        // Ajouter les écouteurs d'événements aux boutons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Mettre à jour les classes des boutons
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-pink', 'bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-orange-500', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-800');
+                });
+                
+                // Ajouter la classe active au bouton cliqué
+                button.classList.remove('bg-gray-200', 'text-gray-800');
+                button.classList.add('active', 'text-white');
+                
+                // Ajouter la couleur appropriée selon le type
+                const filterValue = button.getAttribute('data-filter');
+                if (filterValue === 'all') {
+                    button.classList.add('bg-pink');
+                } else if (filterValue === 'Conference') {
+                    button.classList.add('bg-blue-500');
+                } else if (filterValue === 'Atelier familial') {
+                    button.classList.add('bg-green-500');
+                } else if (filterValue === 'Masterclass') {
+                    button.classList.add('bg-purple-500');
+                } else if (filterValue === 'Atelier technique') {
+                    button.classList.add('bg-orange-500');
+                }
+                
+                // Appliquer le filtre
+                applyFilter(filterValue);
+            });
+        });
+    });
+</script>

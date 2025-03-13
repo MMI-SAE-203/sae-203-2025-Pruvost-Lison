@@ -1,0 +1,110 @@
+---
+import { getAllGuests } from "../../../backend/backend.mjs";
+
+export async function getStaticPaths() {
+    const guests = await getAllGuests();
+
+    return guests.map(guest => ({
+        params: { id: guest.id },
+    }));
+}
+import Layout from "../../layouts/Layout.astro";
+import ImagePB from "../../components/ImagePB.astro";
+import { oneGuest } from "../../../backend/backend.mjs";
+
+const { id } = Astro.params;
+console.log("ID de l'invité:", id);
+const guest = await oneGuest(id);
+console.log("Données de l'invité:", guest);
+---
+
+<Layout title={guest ? `${guest.prenom_invite} ${guest.nom_invite}` : "Détails de l'invité"}>
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        {guest ? (
+            <>
+                <h1 class="text-3xl font-bold mb-2 pt-20">{guest.prenom_invite} {guest.nom_invite}</h1>
+                <p class="text-gray-600 mb-8">
+                    {guest.role_invite}
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Photo de l'invité -->
+                    <div class="col-span-1">
+                        <ImagePB
+                            record={guest}
+                            field="photo_invite"
+                            alt={`${guest.prenom_invite} ${guest.nom_invite}`}
+                            classPicture="w-full rounded-lg overflow-hidden"
+                            classImg="w-full h-auto object-cover"
+                        />
+                    </div>
+
+                    <!-- Biographie et informations -->
+                    <div class="col-span-1 lg:col-span-2">
+                        <h2 class="text-xl font-bold mb-4">Biographie</h2>
+                        <div class="prose mb-8" set:html={guest.biographie_invite} />
+                        
+                        {guest.email_invite && (
+                            <div class="mb-6">
+                                <h3 class="text-lg font-semibold mb-2">Contact</h3>
+                                <p class="text-gray-700">
+                                    <a href={`mailto:${guest.email_invite}`} class="text-pink hover:underline">
+                                        {guest.email_invite}
+                                    </a>
+                                </p>
+                            </div>
+                        )}
+                        
+                        <!-- Films associés à l'invité (si disponible) -->
+                        {guest.films_associes && guest.films_associes.length > 0 && (
+                            <div class="mt-8">
+                                <h3 class="text-lg font-semibold mb-4">Films présentés au festival</h3>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    {guest.films_associes.map(filmId => (
+                                        <li>
+                                            <a href={`/films/${filmId}`} class="text-pink hover:underline">
+                                                {/* Si vous avez le titre du film, vous pouvez l'afficher ici */}
+                                                Voir le film associé
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <!-- Filmographie (si disponible) -->
+                {guest.filmographie && (
+                    <div class="mb-8">
+                        <h2 class="text-xl font-bold mb-4">Filmographie</h2>
+                        <div class="prose" set:html={guest.filmographie} />
+                    </div>
+                )}
+
+                <!-- Récompenses (si disponible) -->
+                {guest.recompenses && (
+                    <div class="mb-8">
+                        <h2 class="text-xl font-bold mb-4">Récompenses</h2>
+                        <div class="prose" set:html={guest.recompenses} />
+                    </div>
+                )}
+
+                <!-- Bouton de retour -->
+                <div class="mt-10">
+                    <a href="/invites" class="inline-block bg-pink text-white py-2 px-6 rounded-lg hover:bg-pink/80 transition-colors">
+                        Retour à la liste des invités
+                    </a>
+                </div>
+            </>
+        ) : (
+            <div class="text-center py-12">
+                <h1 class="text-2xl font-bold text-red-600 mb-4">Invité non trouvé</h1>
+                <p class="mb-6">Désolé, nous n'avons pas pu trouver l'invité que vous cherchez.</p>
+                <a href="/invites" class="inline-block bg-pink text-white py-2 px-6 rounded-lg hover:bg-pink/80 transition-colors">
+                    Retour à la liste des invités
+                </a>
+            </div>
+        )}
+    </main>
+</Layout>

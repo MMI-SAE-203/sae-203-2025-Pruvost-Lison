@@ -61,31 +61,6 @@ export async function update(collection, id, data) {
          await pb.collection(collection).update( id, data);
 }
 
-
-// test
-export async function oneFilm(id) {
-    try {
-        const record = await pb.collection('films').getOne(id);
-        return record;
-    } catch (error) {
-        console.error("Erreur lors de la récupération du film:", error);
-        return null;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Test pour l'Anthentification par mail 
 export async function createUser(email, password) {
     try {
@@ -120,4 +95,44 @@ export function isLoggedIn() {
 export async function logoutUser() {
     pb.authStore.clear();
     console.log("Déconnexion réussie !");
+}
+
+
+
+
+
+
+
+
+
+
+
+// test pour un film
+export async function oneFilm(id) {
+    try {
+        const record = await pb.collection('films').getOne(id);
+        return record;
+    } catch (error) {
+        console.error("Erreur lors de la récupération du film:", error);
+        return null;
+    }
+}
+// test pour une activite
+export async function oneActivity(id) {
+    try {
+        return await pb.collection('Activites').getOne(id);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'activité:', error);
+        return null;
+    }
+}
+
+// test pour un invite
+export async function oneGuest(id) {
+    try {
+        return await pb.collection('Invites').getOne(id);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'invité:', error);
+        return null;
+    }
 }

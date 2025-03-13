@@ -1,0 +1,48 @@
+---
+import Welcome from "../../components/Welcome.astro";
+import LayoutWithHero from "../../layouts/LayoutWithHero.astro";
+import image from "../../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
+import { getAllGuests } from "../../../backend/backend.mjs";
+import GuestCard from "../../components/GuestCard.astro"; // Importez le nouveau composant
+
+const title = "Nos invités";
+const subTitle = "du Lundi 7 au jeudi 10 Juillet 2025.";
+const description =
+    "Découvrez les personnalités qui seront présentes lors de notre festival.";
+
+// Récupérer les invités depuis PocketBase
+const guests = await getAllGuests();
+---
+
+<LayoutWithHero
+    title={title}
+    description={description}
+    subTitle={subTitle}
+    src={image}
+    alt="Image du festival"
+>
+    <div
+        class="absolute inset-0 z-0 flex items-center justify-end overflow-hidden stroke-[--color-pink] stroke-24 opacity-80 mix-blend-difference"
+        slot="patterns"
+    >
+    </div>
+
+    <Fragment slot="content">
+        <h2>Nos invités du festival</h2>
+
+        <!-- Affichage des invités avec le nouveau composant GuestCard -->
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-3"
+        >
+            {
+                guests.length > 0 ? (
+                    guests.map((guest) => <GuestCard {...guest} />)
+                ) : (
+                    <p class="col-span-full text-center">
+                        Aucun invité à afficher pour le moment.
+                    </p>
+                )
+            }
+        </div>
+    </Fragment>
+</LayoutWithHero>

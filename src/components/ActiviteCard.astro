@@ -1,0 +1,57 @@
+---
+import { formatDate } from "../js/helpers";
+
+// Destructurer les propriétés
+const { 
+    type_activite,
+    invite_associer,
+    lieu_activite,
+    description_activite,
+    date_heure_activite,
+    titre_activite,
+    id
+} = Astro.props;
+
+// Déterminer la couleur de badge selon le type d'activité
+const getBadgeColor = (type) => {
+    switch(type) {
+        case "Conference": return "bg-blue-100 text-blue-800";
+        case "Atelier familial": return "bg-green-100 text-green-800";
+        case "Masterclass": return "bg-purple-100 text-purple-800";
+        case "Atelier technique": return "bg-orange-100 text-orange-800";
+        default: return "bg-gray-100 text-gray-800";
+    }
+};
+---
+
+<article class="bg-gray-100 rounded-lg shadow-lg overflow-hidden relative p-4 h-[300px]">
+    <!-- En-tête avec le badge de type -->
+    <span class={`inline-block px-3 py-1 text-xs font-semibold rounded-full mb-4 ${getBadgeColor(type_activite)}`}>
+        {type_activite}
+    </span>
+    
+    <!-- Titre de l'activité -->
+    <h4 class="text-lg font-bold text-darkpurple line-clamp-2 mb-2">
+        {titre_activite}
+    </h4>
+
+    <!-- Lieu et date -->
+    <p class="text-sm text-gray-600 mb-2">
+        {lieu_activite} {date_heure_activite ? `— ${formatDate(date_heure_activite)}` : ''}
+    </p>
+
+    <!-- Description avec hauteur limitée -->
+    <div class="h-[80px] overflow-hidden mb-8">
+        <p class="text-sm text-gray-600">
+            {description_activite}
+        </p>
+    </div>
+    
+    <!-- Lien vers plus d'infos - positionné absolument -->
+    <a 
+        href={`/activites/${id}`} 
+        class="text-pink-600 hover:underline inline-block absolute bottom-4 left-4"
+    >
+        Plus d'info
+    </a>
+</article>

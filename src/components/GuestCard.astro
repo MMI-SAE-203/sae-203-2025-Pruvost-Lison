@@ -1,0 +1,64 @@
+---
+import ImagePB from "./ImagePB.astro";
+
+// Destructurer les propriétés spécifiques aux invités
+const {
+    nom_invite,
+    prenom_invite,
+    photo_invite,
+    role_invite,
+    biographie_invite,
+    id,
+} = Astro.props;
+
+// Conserver l'objet complet pour ImagePB
+const record = Astro.props;
+
+// Valeurs à utiliser pour l'affichage
+const fullName = prenom_invite && nom_invite ? `${prenom_invite} ${nom_invite}` : (prenom_invite || nom_invite || "");
+---
+
+<article class="bg-gray-100 rounded-lg shadow-lg overflow-hidden flex flex-col h-[450px]">
+    <!-- Photo de l'invité - hauteur fixe -->
+    <div class="w-full h-[220px]">
+        <ImagePB
+            record={record}
+            field="photo_invite"
+            alt={fullName}
+            classPicture="w-full h-full"
+            classImg="w-full h-full object-cover object-center"
+        />
+    </div>
+
+    <!-- Contenu avec structure fixe -->
+    <div class="p-4 flex flex-col h-[230px] relative">
+        <!-- Nom de l'invité -->
+        <div class="h-[40px] mb-1">
+            <h4 class="text-lg font-bold text-darkpurple line-clamp-2">
+                {fullName}
+            </h4>
+        </div>
+
+        <!-- Rôle de l'invité -->
+        <div class="h-[25px] mb-2">
+            <p class="text-md font-medium text-gray-700">
+                {role_invite}
+            </p>
+        </div>
+
+        <!-- Extrait de la biographie (version courte) -->
+        <div class="h-[80px] overflow-hidden">
+            <p class="text-sm text-gray-600 line-clamp-4">
+                {biographie_invite}
+            </p>
+        </div>
+        
+        <!-- Lien vers plus d'infos positionné absolument -->
+        <div class="absolute bottom-4 left-4">
+            <a href={`/invites/${id}`} 
+            class="text-pink-600 hover:underline">
+                Plus d'info
+            </a>
+        </div>
+    </div>
+</article>

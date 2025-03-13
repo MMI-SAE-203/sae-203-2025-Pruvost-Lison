@@ -1,35 +1,44 @@
 ---
 import { formatDate } from "../js/helpers";
 import ImagePB from "./ImagePB.astro";
-const { affiche_film, titre_film, lieu_film, date_heure_film, id } =
-    Astro.props;
+const { affiche_film, titre_film, lieu_film, date_heure_film, id } = Astro.props;
 const film = Astro.props;
 ---
 
-<article class="p-4 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
-    <!-- Affiche du film -->
+<article class="bg-gray-100 rounded-lg shadow-lg overflow-hidden flex flex-col h-auto sm:h-auto md:h-[400px] lg:h-[450px]">
+    <!-- Image du film - hauteur responsive -->
+    <div class="w-full h-[180px] sm:h-[180px] md:h-[200px] lg:h-[220px]">
+        <ImagePB
+            record={film}
+            field="affiche_film"
+            alt="image"
+            classPicture="w-full h-full"
+            classImg="w-full h-full object-cover object-center"
+        />
+    </div>
 
-    <ImagePB
-        record={film}
-        field="affiche_film"
-        alt="image"
-        classPicture="object-cover min-h-[40dvh] h-full w-full col-start-1 row-start-1 col-span-2 row-span-2 group-hover:before:bg-black"
-        classImg="group-hover:grayscale-0 group-hover:mix-blend-normal"
-    />
+    <!-- Contenu avec structure responsive -->
+    <div class="p-4 flex flex-col flex-grow relative">
+        <!-- Titre du film avec hauteur adaptative -->
+        <div class="mb-2 min-h-[40px] sm:min-h-[50px] md:min-h-[60px] lg:min-h-[80px]">
+            <h4 class="text-lg font-bold text-darkpurple line-clamp-3">
+                {titre_film}
+            </h4>
+        </div>
 
-    <!-- Titre du film -->
-    <h4 class="text-lg font-bold text-darkpurple">
-        {titre_film}
-    </h4>
-
-    <!-- Lieu et date du film -->
-    <p class="text-sm text-gray-600">
-        {film.lieu_film} — {formatDate(film.date_heure_film)}
-    </p>
-
-    <!-- Lien vers plus d'infos -->
-    <a href={`/films/${id}`} 
-    class="not-first:text-pink-600 hover:underline">
-        Plus d'info
-    </a>
+        <!-- Lieu et date du film -->
+        <div class="mb-8">
+            <p class="text-sm text-gray-600">
+                {film.lieu_film} — {formatDate(film.date_heure_film)}
+            </p>
+        </div>
+        
+        <!-- Lien vers plus d'infos positionné absolument -->
+        <div class="absolute bottom-4 left-4">
+            <a href={`/films/${id}`} 
+            class="text-pink-600 hover:underline">
+                Plus d'info
+            </a>
+        </div>
+    </div>
 </article>

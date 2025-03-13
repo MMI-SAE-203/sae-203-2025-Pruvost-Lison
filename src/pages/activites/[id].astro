@@ -1,0 +1,125 @@
+---
+import { getAllActivities } from "../../../backend/backend.mjs";
+export async function getStaticPaths() {
+    const activites = await getAllActivities();
+    return activites.map(activite => ({
+        params: { id: activite.id },
+    }));
+}
+import Layout from "../../layouts/Layout.astro";
+import { oneActivity } from "../../../backend/backend.mjs";
+import ImagePB from "../../components/ImagePB.astro";
+import { formatDate } from "../../js/helpers";
+
+const { id } = Astro.params;
+const activite = await oneActivity(id);
+
+// Déterminer la couleur de badge selon le type d'activité
+const getBadgeColor = (type) => {
+    switch(type) {
+        case "Conference": return "bg-blue-100 text-blue-800";
+        case "Atelier familial": return "bg-green-100 text-green-800";
+        case "Masterclass": return "bg-purple-100 text-purple-800";
+        case "Atelier technique": return "bg-orange-100 text-orange-800";
+        default: return "bg-gray-100 text-gray-800";
+    }
+};
+---
+
+<Layout title={activite?.titre_activite || "Détail de l'activité"}>
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        {activite ? (
+            <>
+                <h1 class="text-3xl font-bold mb-2 pt-20">{activite.titre_activite}</h1>
+                
+                <!-- Type d'activité (badge) -->
+                <span class={`inline-block px-4 py-1 text-sm font-semibold rounded-full mb-6 ${getBadgeColor(activite.type_activite)}`}>
+                    {activite.type_activite}
+                </span>
+
+                <!-- Image de l'activité (si disponible) -->
+                {activite.image_activite && (
+                    <div class="mb-8">
+                        <ImagePB
+                            record={activite}
+                            field="image_activite"
+                            alt={activite.titre_activite}
+                            classPicture="w-full rounded-lg overflow-hidden max-h-[500px]"
+                            classImg="w-full h-auto object-cover"
+                        />
+                    </div>
+                )}
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Informations principales -->
+                    <div class="col-span-1 lg:col-span-3">
+                        <!-- Description complète -->
+                        <div class="prose mb-8">
+                            <h2 class="text-xl font-bold mb-4">Description</h2>
+                            <div set:html={activite.description_activite} />
+                        </div>
+
+                        <!-- Invité associé (si disponible) -->
+                        {activite.invite_associer && (
+                            <div class="mb-8">
+                                <h2 class="text-xl font-bold mb-4">Intervenant</h2>
+                                <div class="flex items-center">
+                                    <img src="/src/assets/icons/IconPerson.svg" alt="Personne" class="w-5 h-5 mr-2 stroke-pink" />
+                                    <p>{activite.invite_associer}</p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <!-- Détails pratiques -->
+                    <div class="col-span-1 bg-gray-50 p-6 border border-pink rounded-lg flex flex-col space-y-4">
+                        <h3 class="font-bold text-lg mb-2">Informations pratiques</h3>
+                        
+                        {activite.date_heure_activite && (
+                            <div>
+                                <p class="text-gray-600">Date et heure</p>
+                                <p class="font-semibold flex items-center">
+                                    <img src="/src/assets/icons/IconCalendar.svg" alt="Calendrier" class="w-5 h-5 mr-2 stroke-pink" />
+                                    {formatDate(activite.date_heure_activite)}
+                                </p>
+                            </div>
+                        )}
+                        
+                        <div>
+                            <p class="text-gray-600">Lieu</p>
+                            <p class="font-semibold flex items-center">
+                                <img src="/src/assets/icons/IconLocation.svg" alt="Localisation" class="w-5 h-5 mr-2 stroke-pink" />
+                                {activite.lieu_activite}
+                            </p>
+                        </div>
+                        
+                        {activite.duree_activite && (
+                            <div>
+                                <p class="text-gray-600">Durée</p>
+                                <p class="font-semibold flex items-center">
+                                    <img src="/src/assets/icons/IconClock.svg" alt="Horloge" class="w-5 h-5 mr-2 stroke-pink" />
+                                    {activite.duree_activite} minutes
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <!-- Bouton de retour -->
+                <div class="mt-10">
+                    <a href="/activites" class="inline-block bg-pink text-white py-2 px-6 rounded-lg hover:bg-pink/80 transition-colors">
+                        Retour à la liste des activités
+                    </a>
+                </div>
+            </>
+        ) : (
+            <div class="text-center py-12">
+                <h1 class="text-2xl font-bold text-red-600 mb-4">Activité non trouvée</h1>
+                <p class="mb-6">Désolé, nous n'avons pas pu trouver l'activité que vous cherchez.</p>
+                <a href="/activites" class="inline-block bg-pink text-white py-2 px-6 rounded-lg hover:bg-pink/80 transition-colors">
+                    Retour à la liste des activités
+                </a>
+            </div>
+        )}
+    </main>
+</Layout>
