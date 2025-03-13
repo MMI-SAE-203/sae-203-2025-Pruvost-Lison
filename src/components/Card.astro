@@ -3,21 +3,30 @@ import { formatDate } from "../js/helpers";
 import ImagePB from "./ImagePB.astro";
 const { affiche_film, titre_film, lieu_film, date_heure_film, id } = Astro.props;
 const film = Astro.props;
+
+// Vérifiez si le film a bien une affiche
+const hasImage = !!film.affiche_film;
 ---
 
 <article class="bg-gray-100 rounded-lg shadow-lg overflow-hidden flex flex-col h-auto sm:h-auto md:h-[400px] lg:h-[450px]">
     <!-- Image du film - hauteur responsive -->
     <div class="w-full h-[180px] sm:h-[180px] md:h-[200px] lg:h-[220px]">
-        <ImagePB
-            record={film}
-            field="affiche_film"
-            alt="image"
-            classPicture="w-full h-full"
-            classImg="w-full h-full object-cover object-center"
-        />
+        {hasImage ? (
+            <ImagePB
+                record={film}
+                field="affiche_film"
+                alt={titre_film || "Affiche du film"}
+                classPicture="w-full h-full"
+                classImg="w-full h-full object-cover object-center"
+            />
+        ) : (
+            <div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600">
+                Affiche non disponible
+            </div>
+        )}
     </div>
 
-    <!-- Contenu avec structure responsive -->
+    <!-- Le reste du code reste inchangé -->
     <div class="p-4 flex flex-col flex-grow relative">
         <!-- Titre du film avec hauteur adaptative -->
         <div class="mb-2 min-h-[40px] sm:min-h-[50px] md:min-h-[60px] lg:min-h-[80px]">
