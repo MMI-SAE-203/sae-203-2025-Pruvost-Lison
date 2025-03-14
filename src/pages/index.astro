@@ -5,9 +5,17 @@ import Carousel from "../components/Carousel.astro";
 import Card from "../components/Card.astro";
 import GuestCard from "../components/GuestCard.astro";
 import ActiviteCard from "../components/ActiviteCard.astro";
-// Modification du chemin pour l'image héro
 import { Image } from 'astro:assets';
+
+// Import de toutes les images
 import heroImage from "../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
+import afficheImage from "../assets/img/affiche_festival.webp";
+import wallaceImage from "../assets/img/walaceetgromit.webp";
+import belfortImage from "../assets/img/belfort.webp";
+import fnacImage from "../assets/img/fnac.webp";
+import aparrImage from "../assets/img/aparr.webp";
+import cncImage from "../assets/img/cnc.webp";
+
 import { getAllFilms, getAllGuests, getAllActivities } from "../../backend/backend.mjs";
 
 const title = "Festival Lionimation";
@@ -74,12 +82,12 @@ const activities = await getAllActivities();
                         </div>
                     </div>
                     
-                    <!-- Colonne droite: Image du festival - Chemin corrigé -->
+                    <!-- Colonne droite: Image du festival avec composant Image -->
                     <div class="flex justify-center md:justify-end">
-                        <img 
-                            src="/img/affiche_festival.webp" 
+                        <Image 
+                            src={afficheImage} 
                             alt="Affiche du festival Lionimation" 
-                            class="h-auto max-w-full object-contain"
+                            class="h-auto w-auto max-w-full object-contain"
                         />
                     </div>
                 </div>
@@ -152,8 +160,6 @@ const activities = await getAllActivities();
 </div>
             
             <!-- Carousels existants -->
-
-            
             <div class="mt-16 px-4 md:px-8">
                 <Carousel id="guests-carousel" title="Nos invités d'honneur">
                     {guests.slice(0, 8).map((guest) => (
@@ -188,12 +194,12 @@ const activities = await getAllActivities();
             </a>
         </div>
         
-        <!-- Image à droite - Chemin corrigé -->
+        <!-- Image à droite avec composant Image -->
         <div class="md:w-1/2 flex justify-center md:justify-end">
-            <img 
-                src="/img/walaceetgromit.webp" 
+            <Image 
+                src={wallaceImage} 
                 alt="Wallace et Gromit" 
-                class="h-auto max-w-full object-contain"
+                class="h-auto w-auto max-w-full object-contain"
             />
         </div>
     </div>
@@ -219,15 +225,15 @@ const activities = await getAllActivities();
         </div>
 
 
-<!-- Section "ILS NOUS SOUTIENNENT" avec logos partenaires - Chemins corrigés -->
+<!-- Section "ILS NOUS SOUTIENNENT" avec logos partenaires avec composant Image -->
 <div class="w-full max-w-5xl mx-auto px-4 md:px-0 my-20">
     <h2 class="text-3xl font-bold mb-10 uppercase">ILS NOUS<br>SOUTIENNENT</h2>
     
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center mb-8">
         <!-- Logo Belfort -->
         <div class="flex items-center justify-center">
-            <img 
-                src="/img/belfort.webp" 
+            <Image 
+                src={belfortImage} 
                 alt="Ville de Belfort" 
                 class="max-h-24 w-auto"
             />
@@ -235,8 +241,8 @@ const activities = await getAllActivities();
         
         <!-- Logo FNAC -->
         <div class="flex items-center justify-center">
-            <img 
-                src="/img/fnac.webp" 
+            <Image 
+                src={fnacImage} 
                 alt="FNAC" 
                 class="max-h-24 w-auto"
             />
@@ -244,8 +250,8 @@ const activities = await getAllActivities();
         
         <!-- Logo APARR -->
         <div class="flex items-center justify-center">
-            <img 
-                src="/img/aparr.webp" 
+            <Image 
+                src={aparrImage} 
                 alt="APARR" 
                 class="max-h-24 w-auto"
             />
@@ -253,8 +259,8 @@ const activities = await getAllActivities();
         
         <!-- Logo CNC -->
         <div class="flex items-center justify-center">
-            <img 
-                src="/img/cnc.webp" 
+            <Image 
+                src={cncImage} 
                 alt="CNC" 
                 class="max-h-24 w-auto"
             />
