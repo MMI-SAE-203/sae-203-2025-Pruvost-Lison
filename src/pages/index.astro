@@ -5,6 +5,8 @@ import Carousel from "../components/Carousel.astro";
 import Card from "../components/Card.astro";
 import GuestCard from "../components/GuestCard.astro";
 import ActiviteCard from "../components/ActiviteCard.astro";
+// Modification du chemin pour l'image héro
+import { Image } from 'astro:assets';
 import heroImage from "../assets/img/2024_actu_festi_ap_05_ecran.jpg.webp";
 import { getAllFilms, getAllGuests, getAllActivities } from "../../backend/backend.mjs";
 
@@ -72,10 +74,10 @@ const activities = await getAllActivities();
                         </div>
                     </div>
                     
-                    <!-- Colonne droite: Image du festival -->
+                    <!-- Colonne droite: Image du festival - Chemin corrigé -->
                     <div class="flex justify-center md:justify-end">
                         <img 
-                            src="/src/assets/img/affiche_festival.webp" 
+                            src="/img/affiche_festival.webp" 
                             alt="Affiche du festival Lionimation" 
                             class="h-auto max-w-full object-contain"
                         />
@@ -186,10 +188,10 @@ const activities = await getAllActivities();
             </a>
         </div>
         
-        <!-- Image à droite -->
+        <!-- Image à droite - Chemin corrigé -->
         <div class="md:w-1/2 flex justify-center md:justify-end">
             <img 
-                src="/src/assets/img/walaceetgromit.webp" 
+                src="/img/walaceetgromit.webp" 
                 alt="Wallace et Gromit" 
                 class="h-auto max-w-full object-contain"
             />
@@ -217,7 +219,7 @@ const activities = await getAllActivities();
         </div>
 
 
-<!-- Section "ILS NOUS SOUTIENNENT" avec logos partenaires -->
+<!-- Section "ILS NOUS SOUTIENNENT" avec logos partenaires - Chemins corrigés -->
 <div class="w-full max-w-5xl mx-auto px-4 md:px-0 my-20">
     <h2 class="text-3xl font-bold mb-10 uppercase">ILS NOUS<br>SOUTIENNENT</h2>
     
@@ -225,7 +227,7 @@ const activities = await getAllActivities();
         <!-- Logo Belfort -->
         <div class="flex items-center justify-center">
             <img 
-                src="/src/assets/img/belfort.webp" 
+                src="/img/belfort.webp" 
                 alt="Ville de Belfort" 
                 class="max-h-24 w-auto"
             />
@@ -234,7 +236,7 @@ const activities = await getAllActivities();
         <!-- Logo FNAC -->
         <div class="flex items-center justify-center">
             <img 
-                src="/src/assets/img/fnac.webp" 
+                src="/img/fnac.webp" 
                 alt="FNAC" 
                 class="max-h-24 w-auto"
             />
@@ -243,7 +245,7 @@ const activities = await getAllActivities();
         <!-- Logo APARR -->
         <div class="flex items-center justify-center">
             <img 
-                src="/src/assets/img/aparr.webp" 
+                src="/img/aparr.webp" 
                 alt="APARR" 
                 class="max-h-24 w-auto"
             />
@@ -252,7 +254,7 @@ const activities = await getAllActivities();
         <!-- Logo CNC -->
         <div class="flex items-center justify-center">
             <img 
-                src="/src/assets/img/cnc.webp" 
+                src="/img/cnc.webp" 
                 alt="CNC" 
                 class="max-h-24 w-auto"
             />
