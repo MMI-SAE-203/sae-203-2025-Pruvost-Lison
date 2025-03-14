@@ -1,1 +1,1 @@
-{"images":{"remote_images":["https?://pb-sae-203\\.lison-pruvost\\.fr:443/.*"]},"headers":[{"for":"/_astro/*","values":{"Cache-Control":"public, max-age=31536000, immutable"}}]}
+{"images":{"remote_images":["https?://https://pb-sae-203\\.lison-pruvost\\.fr:443/.*"]},"headers":[{"for":"/_astro/*","values":{"Cache-Control":"public, max-age=31536000, immutable"}}]}

@@ -19,7 +19,7 @@ export default defineConfig({
     imageCDN: false,
   }),
   image: {
-    domains: ['pb-sae-203.lison-pruvost.fr'],
+    domains: ['https://pb-sae-203.lison-pruvost.fr:443'],
   },
 });
 
