@@ -15,5 +15,11 @@ export default defineConfig({
 
   experimental: { svg: true },
   output: 'server',
-  adapter: netlify()
+  adapter: netlify({
+    imageCDN: false,
+  }),
+  image: {
+    domains: ['pb-sae-203.lison-pruvost.fr'],
+  },
 });
+
